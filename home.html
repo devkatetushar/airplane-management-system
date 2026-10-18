@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airplane Management System</title>
+</head>
+<body>
+    <h1>Available Flights</h1>
+
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="/my-bookings/">My Bookings</a>
+
+        <form method="post" action="/accounts/logout/">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <a href="/accounts/login/">User Login</a>
+    {% endif %}
+
+    <hr>
+
+    {% for flight in flights %}
+        <h3>{{ flight.airline_name }} - {{ flight.flight_number }}</h3>
+        <p>From: {{ flight.source }}</p>
+        <p>To: {{ flight.destination }}</p>
+        <p>Departure: {{ flight.departure_time }}</p>
+        <p>Arrival: {{ flight.arrival_time }}</p>
+        <p>Ticket Price: ₹{{ flight.ticket_price }}</p>
+        <p>Available Seats: {{ flight.available_seats }}</p>
+
+        {% if user.is_authenticated %}
+            <form method="post"
+                  action="{% url 'book_flight' flight.id %}">
+                {% csrf_token %}
+                <label>Number of seats:</label>
+                <input type="number" name="seats"
+                       min="1" max="10" value="1" required>
+                <button type="submit">Book Ticket</button>
+            </form>
+        {% else %}
+            <p><a href="/accounts/login/">Login to Book</a></p>
+        {% endif %}
+
+        <hr>
+    {% empty %}
+        <p>No scheduled flights are currently available.</p>
+    {% endfor %}
+</body>
+</html>

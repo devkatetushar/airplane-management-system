@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Flight Bookings</title>
+</head>
+<body>
+    <h1>My Bookings</h1>
+
+    <p><a href="/">Back to Flights</a></p>
+
+    {% for booking in bookings %}
+        <h3>Ticket: {{ booking.booking_reference }}</h3>
+        <p>Flight: {{ booking.flight.flight_number }}</p>
+        <p>Route: {{ booking.flight.source }}
+            to {{ booking.flight.destination }}</p>
+        <p>Seats: {{ booking.seats_booked }}</p>
+        <p>Total Amount: ₹{{ booking.total_amount }}</p>
+        <p>Ticket Status: {{ booking.ticket_status }}</p>
+        <p>Payment Status: {{ booking.payment_status }}</p>
+        <hr>
+    {% empty %}
+        <p>You have not booked any flights yet.</p>
+    {% endfor %}
+</body>
+</html>

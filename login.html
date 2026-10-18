@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Airplane System - Login</title>
+</head>
+<body>
+    <h1>Airplane Management System</h1>
+    <h2>User Login</h2>
+
+    {% if form.errors %}
+        <p>Invalid username or password. Please try again.</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+
+    <p><a href="/">Back to Flights</a></p>
+</body>
+</html>
